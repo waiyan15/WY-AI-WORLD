@@ -26,7 +26,7 @@
     .app-container {
       width: 100%;
       max-width: 420px;
-      height: 760px;
+      height: 780px;
       background: #111827;
       border: 1px solid #1f293d;
       border-radius: 28px;
@@ -79,7 +79,7 @@
       display: none;
       flex-direction: column;
       overflow-y: auto;
-      gap: 14px;
+      gap: 12px;
     }
 
     .tab-content.active {
@@ -98,7 +98,7 @@
 
     .input-area {
       width: 100%;
-      height: 140px;
+      height: 120px;
       background: transparent;
       border: none;
       outline: none;
@@ -113,7 +113,7 @@
       color: white;
       border: none;
       border-radius: 10px;
-      padding: 10px 14px;
+      padding: 11px 14px;
       font-size: 14px;
       font-weight: 600;
       display: flex;
@@ -134,20 +134,52 @@
       border: 1px solid #334155;
     }
 
+    .file-uploader {
+      border: 1.5px dashed #38bdf8;
+      border-radius: 14px;
+      padding: 18px;
+      text-align: center;
+      cursor: pointer;
+      background: rgba(56, 189, 248, 0.03);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .file-uploader input {
+      display: none;
+    }
+
+    .progress-bar {
+      width: 100%;
+      background-color: #1e293b;
+      border-radius: 8px;
+      height: 8px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: #38bdf8;
+      transition: width 0.3s;
+    }
+
     .srt-box {
       background: #0a0e17;
       border: 1px solid #1f2937;
       border-radius: 12px;
       padding: 12px;
       font-family: monospace;
-      font-size: 12px;
+      font-size: 11.5px;
       color: #38bdf8;
-      height: 180px;
+      height: 200px;
       overflow-y: auto;
       white-space: pre-wrap;
     }
 
-    /* Bottom Navigation */
     .bottom-nav {
       height: 64px;
       background: #0b101a;
@@ -183,72 +215,70 @@
         <div class="brand-badge">WY</div>
         <div class="brand-title">WY AI Studio</div>
       </div>
-      <span style="font-size: 12px; color: #10b981;"><i class="fa-solid fa-circle-check"></i> Ready</span>
+      <span style="font-size: 12px; color: #10b981;"><i class="fa-solid fa-circle-check"></i> Pro Mode</span>
     </div>
 
-    <!-- TAB 1: Real Voice Player (TTS) -->
-    <div class="tab-content active" id="tab-voice">
+    <!-- TAB 1: SRT Translate Engine (စာကြောင်း ၂၀၀ Auto Translator) -->
+    <div class="tab-content active" id="tab-srt-trans">
+      <div class="card">
+        <span style="font-size: 13px; color: #94a3b8;"><i class="fa-solid fa-language"></i> SRT Auto-Translator (စာကြောင်း ၂၀၀ ထိ ဘာသာပြန်နိုင်သည်)</span>
+        
+        <label class="file-uploader" for="srtFileInput">
+          <i class="fa-solid fa-file-arrow-up" style="font-size: 26px; color: #38bdf8;"></i>
+          <span id="fileNameDisplay" style="font-size: 13px; color: #cbd5e1;">မူရင်း .srt ဖိုင် ရွေးချယ်ပါ (သို့မဟုတ် နှိပ်ပါ)</span>
+          <input type="file" id="srtFileInput" accept=".srt" onchange="handleFileSelect(event)">
+        </label>
+
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <button class="btn-action" id="btnTranslate" onclick="processAndTranslateSRT()" disabled style="opacity: 0.6;">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> မြန်မာစာတန်းထိုး အဖြစ် ဘာသာပြန်မည်
+        </button>
+
+        <button class="btn-action btn-secondary" id="btnDownload" onclick="downloadTranslatedSRT()" style="display: none;">
+          <i class="fa-solid fa-download"></i> မြန်မာ .srt ဖိုင် ဒေါင်းလုဒ်ဆွဲမည်
+        </button>
+      </div>
+
+      <div class="srt-box" id="srtLog">ဘာသာပြန်ပြီးသား စာတန်းထိုးများကို ဤနေရာတွင် တိုက်ရိုက် ကြည့်ရှုနိုင်ပါမည်...</div>
+    </div>
+
+    <!-- TAB 2: Voice Maker -->
+    <div class="tab-content" id="tab-voice">
       <div class="card" style="flex:1;">
         <span style="font-size: 13px; color: #94a3b8;"><i class="fa-solid fa-volume-high"></i> အသံဖန်တီးခြင်း (Text to Speech)</span>
-        <textarea class="input-area" id="voiceText" placeholder="ဖတ်ပြစေလိုသော စာသားကို ရိုက်ထည့်ပါ (English/Burmese)...">မင်္ဂလာပါ WY AI Studio မှ ကြိုဆိုပါတယ်။</textarea>
+        <textarea class="input-area" id="voiceText" placeholder="ဖတ်ပြစေလိုသော စာသားကို ရိုက်ထည့်ပါ...">မင်္ဂလာပါ WY AI Studio မှ ကြိုဆိုပါတယ်။</textarea>
         
         <div style="display:flex; gap: 8px;">
           <button class="btn-action" style="flex:1;" onclick="playVoice()">
             <i class="fa-solid fa-play"></i> အသံဖွင့်ရန်
           </button>
-          <button class="btn-action btn-secondary" onclick="stopVoice()">
+          <button class="btn-action btn-secondary" onclick="window.speechSynthesis.cancel()">
             <i class="fa-solid fa-stop"></i>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- TAB 2: Real SRT Generator & Downloader -->
-    <div class="tab-content" id="tab-srt">
-      <div class="card">
-        <span style="font-size: 13px; color: #94a3b8;"><i class="fa-regular fa-closed-captioning"></i> SRT ဖန်တီးပြီး Download ပြုလုပ်ရန်</span>
-        <input type="text" id="srtLine1" style="background:#0b101a; border:1px solid #334155; padding:8px; border-radius:8px; color:white;" value="မင်္ဂလာပါ မိတ်ဆွေ">
-        <input type="text" id="srtLine2" style="background:#0b101a; border:1px solid #334155; padding:8px; border-radius:8px; color:white;" value="ဒီနေ့ ဗီဒီယိုလေးကို စတင်လိုက်ကြရအောင်">
-        <button class="btn-action" onclick="generateSRT()">
-          <i class="fa-solid fa-file-arrow-down"></i> .srt ဖိုင် ထုတ်ယူမည်
-        </button>
-      </div>
-      <div class="srt-box" id="srtDisplay">SRT ဖိုင် အကြမ်းကို ဤနေရာတွင် ပြသပေးပါမည်...</div>
-    </div>
-
-    <!-- TAB 3: Translate -->
-    <div class="tab-content" id="tab-translate">
-      <div class="card">
-        <span style="font-size: 13px; color: #94a3b8;"><i class="fa-solid fa-globe"></i> အမြန် ဘာသာပြန်ကိရိယာ</span>
-        <textarea class="input-area" id="translateInput" placeholder="ဘာသာပြန်လိုသော တရုတ် သို့မဟုတ် အင်္ဂလိပ်စာ ရိုက်ထည့်ပါ..."></textarea>
-        <button class="btn-action" onclick="translateText()">
-          <i class="fa-solid fa-language"></i> မြန်မာဘာသာသို့ ပြောင်းမည်
-        </button>
-      </div>
-      <div class="card" style="flex:1;">
-        <span style="font-size: 13px; color: #94a3b8;">ရလဒ် -</span>
-        <p id="translateResult" style="font-size: 14px; line-height: 1.6; color: #38bdf8;">စာသား ရိုက်ထည့်ပြီး ပြောင်းလဲနိုင်ပါသည်။</p>
-      </div>
-    </div>
-
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
-      <div class="nav-item active" onclick="switchTab('tab-voice', this)">
+      <div class="nav-item active" onclick="switchTab('tab-srt-trans', this)">
+        <i class="fa-solid fa-closed-captioning"></i>
+        <span>SRT ဘာသာပြန်</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('tab-voice', this)">
         <i class="fa-solid fa-volume-high"></i>
-        <span>အသံထုတ်မည်</span>
-      </div>
-      <div class="nav-item" onclick="switchTab('tab-srt', this)">
-        <i class="fa-regular fa-closed-captioning"></i>
-        <span>SRT ဖိုင်</span>
-      </div>
-      <div class="nav-item" onclick="switchTab('tab-translate', this)">
-        <i class="fa-solid fa-globe"></i>
-        <span>Translate</span>
+        <span>အသံထုတ်စနစ်</span>
       </div>
     </div>
   </div>
 
   <script>
+    let rawSRTText = "";
+    let finalTranslatedSRT = "";
+
     function switchTab(tabId, el) {
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
@@ -256,63 +286,96 @@
       el.classList.add('active');
     }
 
-    // 1. Text-To-Speech Logic (တကယ့်အသံဖတ်ပေးသည့်စနစ်)
+    // 1. File Upload Logic
+    function handleFileSelect(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      document.getElementById('fileNameDisplay').textContent = file.name;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        rawSRTText = e.target.result;
+        const btn = document.getElementById('btnTranslate');
+        btn.disabled = false;
+        btn.style.opacity = "1";
+        document.getElementById('srtLog').textContent = `ဖိုင်ဖတ်ပြီးပါပြီ။ စာကြောင်းများကို ဘာသာပြန်ရန် အသင့်ဖြစ်နေပါပြီ...\n\nမူရင်းအစအကြမ်း:\n` + rawSRTText.substring(0, 200) + "...";
+      };
+      reader.readAsText(file);
+    }
+
+    // 2. SRT Parsing & Translation Engine (Up to 200 Subtitles)
+    async function processAndTranslateSRT() {
+      if (!rawSRTText) return alert("ကျေးဇူးပြု၍ .srt ဖိုင် အရင်ထည့်သွင်းပေးပါ");
+
+      const logBox = document.getElementById('srtLog');
+      const progressBar = document.getElementById('progressBar');
+      const progressFill = document.getElementById('progressFill');
+      const btnTranslate = document.getElementById('btnTranslate');
+      const btnDownload = document.getElementById('btnDownload');
+
+      progressBar.style.display = "block";
+      btnTranslate.disabled = true;
+      logBox.textContent = "ဘာသာပြန်ခြင်း စတင်နေပါပြီ...\n";
+
+      // Split SRT Blocks
+      const blocks = rawSRTText.trim().replace(/\r\n/g, '\n').split(/\n\n+/);
+      const totalBlocks = Math.min(blocks.length, 200); // Limit to 200 lines
+      let translatedBlocks = [];
+
+      for (let i = 0; i < totalBlocks; i++) {
+        const lines = blocks[i].split('\n');
+        if (lines.length >= 3) {
+          const indexNum = lines[0];
+          const timeCode = lines[1];
+          const originalText = lines.slice(2).join(' ');
+
+          // Translate Subtitle Line
+          try {
+            const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(originalText)}&langpair=autodetect|my`);
+            const data = await res.json();
+            const translatedText = (data.responseData && data.responseData.translatedText) ? data.responseData.translatedText : originalText;
+
+            translatedBlocks.push(`${indexNum}\n${timeCode}\n${translatedText}`);
+            logBox.textContent = `[${i + 1}/${totalBlocks}] ပြောင်းလဲပြီး: ${translatedText}\n` + logBox.textContent;
+          } catch (e) {
+            translatedBlocks.push(blocks[i]); // Fallback to original
+          }
+        } else {
+          translatedBlocks.push(blocks[i]);
+        }
+
+        // Update Progress Bar
+        const percent = Math.round(((i + 1) / totalBlocks) * 100);
+        progressFill.style.width = `${percent}%`;
+        
+        // Small delay to prevent API rate limit
+        await new Promise(resolve => setTimeout(resolve, 150));
+      }
+
+      finalTranslatedSRT = translatedBlocks.join('\n\n');
+      logBox.textContent = "အကုန်လုံး မြန်မာဘာသာသို့ အောင်မြင်စွာ ပြောင်းလဲပြီးပါပြီ!\n\n" + finalTranslatedSRT;
+      btnDownload.style.display = "flex";
+      btnTranslate.disabled = false;
+    }
+
+    // 3. Download Translated SRT
+    function downloadTranslatedSRT() {
+      if (!finalTranslatedSRT) return alert("ဒေါင်းလုဒ်ဆွဲရန် စာတန်းထိုး မရှိသေးပါ");
+      const blob = new Blob([finalTranslatedSRT], { type: 'text/plain;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'burmese_subtitles.srt';
+      link.click();
+    }
+
+    // 4. Voice TTS Engine
     function playVoice() {
       const text = document.getElementById('voiceText').value;
-      if (!text.trim()) return alert("စာသား အရင်ရိုက်ထည့်ပေးပါ");
-      
+      if (!text.trim()) return;
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.rate = 0.9;
       window.speechSynthesis.speak(utterance);
-    }
-
-    function stopVoice() {
-      window.speechSynthesis.cancel();
-    }
-
-    // 2. Real SRT Generator & Downloader (.srt ဖိုင် တကယ် download ဆွဲပေးသည့်စနစ်)
-    function generateSRT() {
-      const line1 = document.getElementById('srtLine1').value || "စာတန်းထိုး အပိုင်း ၁";
-      const line2 = document.getElementById('srtLine2').value || "စာတန်းထိုး အပိုင်း ၂";
-
-      const srtContent = 
-`1
-00:00:01,000 --> 00:00:03,500
-${line1}
-
-2
-00:00:04,000 --> 00:00:07,000
-${line2}`;
-
-      document.getElementById('srtDisplay').textContent = srtContent;
-
-      // File download trigger
-      const blob = new Blob([srtContent], { type: 'text/plain;charset=utf-8' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'subtitle.srt';
-      link.click();
-    }
-
-    // 3. Simple Translate Logic
-    async function translateText() {
-      const text = document.getElementById('translateInput').value;
-      const resBox = document.getElementById('translateResult');
-      if (!text.trim()) return alert("ဘာသာပြန်မည့်စာ ရိုက်ထည့်ပါ");
-
-      resBox.innerText = "ဘာသာပြန်နေပါသည်...";
-      try {
-        const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=autodetect|my`);
-        const data = await response.json();
-        if (data.responseData && data.responseData.translatedText) {
-          resBox.innerText = data.responseData.translatedText;
-        } else {
-          resBox.innerText = "ဘာသာပြန်ခြင်း မအောင်မြင်ပါ။ စာသားကို ပြန်စစ်ပေးပါ။";
-        }
-      } catch (err) {
-        resBox.innerText = "အင်တာနက်ချိတ်ဆက်မှုကို စစ်ဆေးပေးပါ။";
-      }
     }
   </script>
 </body>
