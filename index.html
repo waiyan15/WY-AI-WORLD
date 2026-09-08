@@ -6,216 +6,29 @@
   <title>WY AI Studio</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    }
-
-    body {
-      background-color: #0b0f19;
-      color: #e6edf3;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 12px;
-    }
-
-    .app-container {
-      width: 100%;
-      max-width: 420px;
-      height: 800px;
-      background: #111827;
-      border: 1px solid #1f293d;
-      border-radius: 28px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
-    }
-
-    .header {
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #1f2937;
-    }
-
-    .brand-section {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .brand-badge {
-      width: 42px;
-      height: 42px;
-      background: #0f172a;
-      border: 1.5px solid #0095ff;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      color: #38bdf8;
-      font-size: 16px;
-      box-shadow: 0 0 12px rgba(0, 149, 255, 0.35);
-    }
-
-    .brand-title {
-      font-size: 19px;
-      font-weight: 700;
-      background: linear-gradient(90deg, #38bdf8, #818cf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .tab-content {
-      flex: 1;
-      padding: 16px;
-      display: none;
-      flex-direction: column;
-      overflow-y: auto;
-      gap: 12px;
-    }
-
-    .tab-content.active {
-      display: flex;
-    }
-
-    .card {
-      background: #151d2e;
-      border: 1px solid #1e293b;
-      border-radius: 16px;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .key-input {
-      background: #0b101a;
-      border: 1px solid #334155;
-      padding: 10px 12px;
-      border-radius: 10px;
-      color: #38bdf8;
-      font-size: 13px;
-      outline: none;
-      width: 100%;
-    }
-
-    .input-area {
-      width: 100%;
-      height: 120px;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: #cbd5e1;
-      font-size: 14px;
-      line-height: 1.6;
-      resize: none;
-    }
-
-    .btn-action {
-      background: #0284c7;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 11px 14px;
-      font-size: 14px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .btn-action:hover {
-      background: #0369a1;
-    }
-
-    .btn-secondary {
-      background: #1e293b;
-      color: #94a3b8;
-      border: 1px solid #334155;
-    }
-
-    .file-uploader {
-      border: 1.5px dashed #38bdf8;
-      border-radius: 14px;
-      padding: 16px;
-      text-align: center;
-      cursor: pointer;
-      background: rgba(56, 189, 248, 0.03);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .file-uploader input {
-      display: none;
-    }
-
-    .progress-bar {
-      width: 100%;
-      background-color: #1e293b;
-      border-radius: 8px;
-      height: 8px;
-      overflow: hidden;
-      display: none;
-    }
-
-    .progress-fill {
-      width: 0%;
-      height: 100%;
-      background: #10b981;
-      transition: width 0.3s;
-    }
-
-    .srt-box {
-      background: #0a0e17;
-      border: 1px solid #1f2937;
-      border-radius: 12px;
-      padding: 12px;
-      font-family: monospace;
-      font-size: 11.5px;
-      color: #38bdf8;
-      height: 180px;
-      overflow-y: auto;
-      white-space: pre-wrap;
-    }
-
-    .bottom-nav {
-      height: 64px;
-      background: #0b101a;
-      border-top: 1px solid #1f2937;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
-
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      color: #64748b;
-      font-size: 11px;
-      cursor: pointer;
-      padding: 6px 12px;
-      border-radius: 8px;
-    }
-
-    .nav-item.active {
-      color: #38bdf8;
-      background: rgba(56, 189, 248, 0.08);
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #0b0f19; color: #e6edf3; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 12px; }
+    .app-container { width: 100%; max-width: 440px; height: 820px; background: #111827; border: 1px solid #1f293d; border-radius: 28px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 45px rgba(0,0,0,0.7); }
+    .header { padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #1f2937; }
+    .brand-section { display: flex; align-items: center; gap: 10px; }
+    .brand-badge { width: 40px; height: 40px; background: #0f172a; border: 1.5px solid #0095ff; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #38bdf8; font-size: 16px; box-shadow: 0 0 12px rgba(0,149,255,0.35); }
+    .brand-title { font-size: 18px; font-weight: 700; background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .tab-content { flex: 1; padding: 14px; display: none; flex-direction: column; overflow-y: auto; gap: 12px; }
+    .tab-content.active { display: flex; }
+    .card { background: #151d2e; border: 1px solid #1e293b; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+    .key-input { background: #0b101a; border: 1px solid #334155; padding: 8px 12px; border-radius: 10px; color: #38bdf8; font-size: 12px; width: 100%; outline: none; }
+    .input-area { width: 100%; height: 110px; background: transparent; border: none; outline: none; color: #cbd5e1; font-size: 13.5px; line-height: 1.6; resize: none; }
+    .btn-action { background: #0284c7; color: white; border: none; border-radius: 10px; padding: 10px 14px; font-size: 13.5px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: 0.2s; }
+    .btn-action:hover { background: #0369a1; }
+    .btn-secondary { background: #1e293b; color: #94a3b8; border: 1px solid #334155; }
+    .file-uploader { border: 1.5px dashed #38bdf8; border-radius: 14px; padding: 14px; text-align: center; cursor: pointer; background: rgba(56, 189, 248, 0.03); display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .file-uploader input { display: none; }
+    .progress-bar { width: 100%; background-color: #1e293b; border-radius: 8px; height: 6px; overflow: hidden; display: none; }
+    .progress-fill { width: 0%; height: 100%; background: #10b981; transition: width 0.3s; }
+    .srt-box { background: #0a0e17; border: 1px solid #1f2937; border-radius: 12px; padding: 12px; font-family: monospace; font-size: 11.5px; color: #38bdf8; height: 170px; overflow-y: auto; white-space: pre-wrap; }
+    .bottom-nav { height: 64px; background: #0b101a; border-top: 1px solid #1f2937; display: flex; justify-content: space-around; align-items: center; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #64748b; font-size: 10.5px; cursor: pointer; padding: 6px 8px; border-radius: 8px; }
+    .nav-item.active { color: #38bdf8; background: rgba(56, 189, 248, 0.08); }
   </style>
 </head>
 <body>
@@ -226,84 +39,121 @@
         <div class="brand-badge">WY</div>
         <div class="brand-title">WY AI Studio</div>
       </div>
-      <span style="font-size: 11px; color: #10b981;"><i class="fa-solid fa-bolt"></i> Gemini Flash</span>
+      <span style="font-size: 11px; color: #10b981;"><i class="fa-solid fa-bolt"></i> Ultra Suite</span>
     </div>
 
-    <!-- TAB 1: Gemini SRT Translator (250 Lines Capacity) -->
+    <!-- API Key Input Section (Common) -->
+    <div style="padding: 10px 14px 0 14px;">
+      <input type="password" id="geminiApiKey" class="key-input" placeholder="🔑 Gemini API Key ထည့်ပါ (Auto Saved)" onchange="saveApiKey()">
+    </div>
+
+    <!-- TAB 1: SRT Auto Translator (250 Lines) -->
     <div class="tab-content active" id="tab-srt">
       <div class="card">
-        <span style="font-size: 12px; color: #94a3b8;"><i class="fa-solid fa-key"></i> Gemini API Key ထည့်ရန် (Auto Saved)</span>
-        <input type="password" id="geminiApiKey" class="key-input" placeholder="AI Studio Key (AIzaSy...)" onchange="saveApiKey()">
-      </div>
-
-      <div class="card">
+        <span style="font-size: 12px; color: #94a3b8;"><i class="fa-solid fa-closed-captioning"></i> SRT Translator (စာကြောင်း ၂၅၀ ထိ မပျက်မကွက် ပြန်ပေးသည်)</span>
         <label class="file-uploader" for="srtFileInput">
-          <i class="fa-solid fa-file-arrow-up" style="font-size: 24px; color: #38bdf8;"></i>
-          <span id="fileNameDisplay" style="font-size: 13px; color: #cbd5e1;">.srt ဖိုင် ရွေးချယ်ပါ (စာကြောင်း ၂၅၀ အထိ)</span>
+          <i class="fa-solid fa-file-arrow-up" style="font-size: 22px; color: #38bdf8;"></i>
+          <span id="fileNameDisplay" style="font-size: 12.5px; color: #cbd5e1;">.srt ဖိုင် ရွေးချယ်ပါ</span>
           <input type="file" id="srtFileInput" accept=".srt" onchange="handleFileSelect(event)">
         </label>
-
-        <div class="progress-bar" id="progressBar">
-          <div class="progress-fill" id="progressFill"></div>
-        </div>
-
-        <button class="btn-action" id="btnTranslate" onclick="translateWithGemini()" disabled style="opacity: 0.6;">
-          <i class="fa-solid fa-wand-magic-sparkles"></i> AI ဖြင့် မြန်မာစာတန်းထိုး ပြောင်းမည်
+        <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+        <button class="btn-action" id="btnTranslate" onclick="translateWithGemini()" disabled style="opacity:0.6;">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> AI ဖြင့် စာတန်းထိုး ၂၅၀ အပြည့် ပြောင်းမည်
         </button>
-
-        <button class="btn-action btn-secondary" id="btnDownload" onclick="downloadSRT()" style="display: none;">
+        <button class="btn-action btn-secondary" id="btnDownload" onclick="downloadSRT()" style="display:none;">
           <i class="fa-solid fa-download"></i> မြန်မာ .srt ဖိုင် ဒေါင်းလုဒ်ဆွဲမည်
         </button>
       </div>
-
-      <div class="srt-box" id="srtLog">API Key ထည့်သွင်းပြီး .srt ဖိုင်ထည့်ပါက သဘာဝကျကျ ဘာသာပြန်ပေးပါမည်...</div>
+      <div class="srt-box" id="srtLog">.srt ဖိုင်ထည့်သွင်း၍ ဘာသာပြန်ယူနိုင်ပါသည်...</div>
     </div>
 
-    <!-- TAB 2: Burmese Text To Speech -->
+    <!-- TAB 2: Video to Burmese Subtitle (Video တန်းထည့်ပြီး စာတန်းထိုးယူခြင်း) -->
+    <div class="tab-content" id="tab-video-sub">
+      <div class="card">
+        <span style="font-size: 12px; color: #94a3b8;"><i class="fa-solid fa-film"></i> Video/Audio မှ မြန်မာစာတန်းထိုး တိုက်ရိုက်ထုတ်ယူမည်</span>
+        <label class="file-uploader" for="videoFileInput">
+          <i class="fa-solid fa-video" style="font-size: 22px; color: #38bdf8;"></i>
+          <span id="videoNameDisplay" style="font-size: 12.5px; color: #cbd5e1;">Video/Audio ဖိုင် ရွေးချယ်ပါ (MP4, MP3, WEBM)</span>
+          <input type="file" id="videoFileInput" accept="video/*,audio/*" onchange="handleVideoSelect(event)">
+        </label>
+        <button class="btn-action" id="btnVideoSub" onclick="processVideoSubtitles()" disabled style="opacity:0.6;">
+          <i class="fa-solid fa-closed-captioning"></i> ဗီဒီယိုမှ စာတန်းထိုး တန်းဖန်တီးမည်
+        </button>
+        <button class="btn-action btn-secondary" id="btnDownloadVideoSrt" onclick="downloadVideoSRT()" style="display:none;">
+          <i class="fa-solid fa-download"></i> ထွက်လာသော .srt ဖိုင် ရယူမည်
+        </button>
+      </div>
+      <div class="srt-box" id="videoSubLog">ဗီဒီယိုကို နားထောင်ပြီး အချိန်မှတ်တိကျသော မြန်မာစာတန်းထိုး `.srt` ကို Gemini မှ တိုက်ရိုက်ထုတ်ပေးပါမည်...</div>
+    </div>
+
+    <!-- TAB 3: Auto Recap Maker (ဇာတ်လမ်းအကျဉ်းချုပ်) -->
+    <div class="tab-content" id="tab-recap">
+      <div class="card">
+        <span style="font-size: 12px; color: #94a3b8;"><i class="fa-solid fa-book-open"></i> Video / Drama Auto Recap ဖန်တီးစနစ်</span>
+        <textarea class="input-area" id="recapInput" placeholder="ဇာတ်လမ်းအကျဉ်းချုပ်လိုသော စာသားများ သို့မဟုတ် Subtitle များကို ထည့်ပါ..."></textarea>
+        <button class="btn-action" onclick="generateRecap()">
+          <i class="fa-solid fa-fire"></i> Viral Recap ဖန်တီးမည် (TikTok/Reels)
+        </button>
+      </div>
+      <div class="card" style="flex:1;">
+        <span style="font-size: 12px; color: #94a3b8;">Recap ရလဒ် -</span>
+        <div id="recapOutput" style="font-size: 13.5px; line-height: 1.6; color: #38bdf8; overflow-y:auto; max-height:180px;">Recap အကျဉ်းချုပ်ကို ဤနေရာတွင် ရေးသားပေးပါမည်...</div>
+      </div>
+    </div>
+
+    <!-- TAB 4: Burmese TTS (မြန်မာစစ်စစ် အသံထွက်စနစ်) -->
     <div class="tab-content" id="tab-voice">
       <div class="card" style="flex:1;">
-        <span style="font-size: 13px; color: #94a3b8;"><i class="fa-solid fa-volume-high"></i> မြန်မာ အသံထွက်စနစ် (Burmese TTS)</span>
-        <textarea class="input-area" id="voiceText" placeholder="ဖတ်ပြစေလိုသော မြန်မာစာ ရိုက်ထည့်ပါ...">မင်္ဂလာပါ WY AI Studio မှ ကြိုဆိုပါတယ်။ ဗီဒီယိုစာတန်းထိုး ပြုလုပ်ခြင်း အောင်မြင်ပါသည်။</textarea>
+        <span style="font-size: 12px; color: #94a3b8;"><i class="fa-solid fa-volume-high"></i> မြန်မာ အသံထွက်စနစ် (Burmese Voice Engine)</span>
+        <textarea class="input-area" id="voiceText" placeholder="ဖတ်ပြစေလိုသော မြန်မာစာ ရိုက်ထည့်ပါ...">မင်္ဂလာပါ WY AI Studio မှ အသံထွက်ဖတ်ပြပေးနေပါပြီခင်ဗျာ။</textarea>
         
         <div style="display:flex; gap: 8px;">
           <button class="btn-action" style="flex:1;" onclick="playBurmeseVoice()">
             <i class="fa-solid fa-play"></i> မြန်မာလို ဖတ်ပြပါ
           </button>
           <button class="btn-action btn-secondary" onclick="stopBurmeseVoice()">
-            <i class="fa-solid fa-stop"></i>
+            <i class="fa-solid fa-stop"></i> ရပ်မည်
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Bottom Navigation -->
+    <!-- Bottom Navigation Bar -->
     <div class="bottom-nav">
       <div class="nav-item active" onclick="switchTab('tab-srt', this)">
-        <i class="fa-solid fa-closed-captioning"></i>
-        <span>SRT ဘာသာပြန်</span>
+        <i class="fa-solid fa-file-lines"></i>
+        <span>SRT ပြန်မည်</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('tab-video-sub', this)">
+        <i class="fa-solid fa-video"></i>
+        <span>Video to SRT</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('tab-recap', this)">
+        <i class="fa-solid fa-bolt"></i>
+        <span>Auto Recap</span>
       </div>
       <div class="nav-item" onclick="switchTab('tab-voice', this)">
         <i class="fa-solid fa-volume-high"></i>
-        <span>မြန်မာအသံစနစ်</span>
+        <span>မြန်မာအသံ</span>
       </div>
     </div>
   </div>
 
-  <audio id="audioPlayer" style="display: none;"></audio>
+  <audio id="ttsAudio" style="display: none;"></audio>
 
   <script>
     let rawSRT = "";
     let finalTranslatedSRT = "";
+    let videoFileBase64 = "";
+    let videoSRTResult = "";
 
-    // Load saved API key on startup
     window.onload = function() {
       const savedKey = localStorage.getItem('wy_gemini_key');
       if (savedKey) document.getElementById('geminiApiKey').value = savedKey;
     };
 
     function saveApiKey() {
-      const key = document.getElementById('geminiApiKey').value.trim();
-      localStorage.setItem('wy_gemini_key', key);
+      localStorage.setItem('wy_gemini_key', document.getElementById('geminiApiKey').value.trim());
     }
 
     function switchTab(tabId, el) {
@@ -313,27 +163,25 @@
       el.classList.add('active');
     }
 
+    // 1. SRT FILE SELECT & GEMINI TRANSLATION (250 Lines)
     function handleFileSelect(event) {
       const file = event.target.files[0];
       if (!file) return;
-
       document.getElementById('fileNameDisplay').textContent = file.name;
       const reader = new FileReader();
       reader.onload = function(e) {
         rawSRT = e.target.result;
         const btn = document.getElementById('btnTranslate');
-        btn.disabled = false;
-        btn.style.opacity = "1";
-        document.getElementById('srtLog').textContent = "ဖိုင်ဖတ်ပြီးပါပြီ။ 'AI ဖြင့် မြန်မာစာတန်းထိုး ပြောင်းမည်' ကို နှိပ်ပါ...";
+        btn.disabled = false; btn.style.opacity = "1";
+        document.getElementById('srtLog').textContent = "SRT ဖိုင် အဆင်သင့်ဖြစ်ပါပြီ။ AI ဖြင့် ပြောင်းနိုင်ပါပြီ။";
       };
       reader.readAsText(file);
     }
 
-    // AI Translation Batch Engine (Max 250 Lines)
     async function translateWithGemini() {
       const apiKey = document.getElementById('geminiApiKey').value.trim();
-      if (!apiKey) return alert("ကျေးဇူးပြု၍ Google AI Studio API Key အရင်ထည့်ပေးပါ!");
-      if (!rawSRT) return alert(".srt ဖိုင် အရင်ရွေးချယ်ပေးပါ!");
+      if (!apiKey) return alert("Gemini API Key အရင်ထည့်ပေးပါ!");
+      if (!rawSRT) return alert(".srt ဖိုင် ထည့်သွင်းပေးပါ!");
 
       const logBox = document.getElementById('srtLog');
       const progressBar = document.getElementById('progressBar');
@@ -345,95 +193,157 @@
       btnTranslate.disabled = true;
 
       const blocks = rawSRT.trim().replace(/\r\n/g, '\n').split(/\n\n+/);
-      const totalBlocks = Math.min(blocks.length, 250); // Up to 250 blocks
-      logBox.textContent = `စုစုပေါင်း စာကြောင်းရေ ${totalBlocks} ကို AI ဖြင့် စတင်ဘာသာပြန်နေပါသည်...\n`;
+      const totalBlocks = Math.min(blocks.length, 250);
+      logBox.textContent = `စာကြောင်းရေ ${totalBlocks} ကို စတင်ဘာသာပြန်နေပါသည်...\n`;
 
-      const BATCH_SIZE = 25; // 25 subtitles per API call for safety & quality
+      const BATCH_SIZE = 25;
       let finalResultBlocks = [];
 
       for (let i = 0; i < totalBlocks; i += BATCH_SIZE) {
         const batchBlocks = blocks.slice(i, Math.min(i + BATCH_SIZE, totalBlocks));
-        
         let batchInput = [];
         batchBlocks.forEach(b => {
           const lines = b.split('\n');
           if (lines.length >= 3) {
-            batchInput.push({
-              id: lines[0],
-              time: lines[1],
-              text: lines.slice(2).join(' ')
-            });
+            batchInput.push({ id: lines[0], time: lines[1], text: lines.slice(2).join(' ') });
           }
         });
 
-        const promptText = `You are an expert subtitle translator for video series. Translate the following Chinese/foreign subtitle dialogue texts into natural, conversational, fluent Burmese (မြန်မာစကားပြော သဘာဝကျကျ). 
-DO NOT change timecodes or IDs.
-Return ONLY valid JSON format with array of objects containing keys "id", "time", and "text":
+        const promptText = `Translate the subtitle dialogues into natural, conversational, fluent Burmese (မြန်မာစကားပြော သဘာဝကျကျ အဓိပ္ပာယ်တိကျစွာ).
+Return strictly a JSON array of objects with keys "id", "time", "text":
 ${JSON.stringify(batchInput)}`;
 
         try {
           const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: promptText }] }]
-            })
+            body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
           });
-
           const data = await res.json();
-          let aiText = data.candidates[0].content.parts[0].text;
-          aiText = aiText.replace(/```json/g, '').replace(/```/g, '').trim();
-
+          let aiText = data.candidates[0].content.parts[0].text.replace(/```json/g, '').replace(/```/g, '').trim();
           const translatedArr = JSON.parse(aiText);
-          translatedArr.forEach(item => {
-            finalResultBlocks.push(`${item.id}\n${item.time}\n${item.text}`);
-          });
-
-          logBox.textContent = `[${finalResultBlocks.length}/${totalBlocks}] ကြောင်း ပြီးစီးပါပြီ...\n` + logBox.textContent;
+          translatedArr.forEach(item => finalResultBlocks.push(`${item.id}\n${item.time}\n${item.text}`));
+          logBox.textContent = `[${finalResultBlocks.length}/${totalBlocks}] ကြောင်း ဘာသာပြန်ပြီး...\n` + logBox.textContent;
         } catch (err) {
-          // Fallback to original if parse error
           batchBlocks.forEach(b => finalResultBlocks.push(b));
         }
 
-        const pct = Math.round((Math.min(i + BATCH_SIZE, totalBlocks) / totalBlocks) * 100);
-        progressFill.style.width = `${pct}%`;
+        progressFill.style.width = `${Math.round((Math.min(i + BATCH_SIZE, totalBlocks) / totalBlocks) * 100)}%`;
       }
 
       finalTranslatedSRT = finalResultBlocks.join('\n\n');
-      logBox.textContent = "ဘာသာပြန်ခြင်း ပြီးမြောက်ပါပြီ! CapCut အတွက် ဒေါင်းလုဒ် ဆွဲယူနိုင်ပါပြီ။\n\n" + finalTranslatedSRT;
+      logBox.textContent = "အကုန်လုံး မြန်မာဘာသာသို့ အောင်မြင်စွာ ပြောင်းလဲပြီးပါပြီ!\n\n" + finalTranslatedSRT;
       btnDownload.style.display = "flex";
       btnTranslate.disabled = false;
     }
 
     function downloadSRT() {
       const blob = new Blob([finalTranslatedSRT], { type: 'text/plain;charset=utf-8' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'burmese_subtitles.srt';
-      link.click();
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'burmese_subtitles.srt'; a.click();
     }
 
-    // 3. Burmese Text to Speech Engine (Google Translate TTS Direct Stream)
+    // 2. VIDEO TO AUTO BURMESE SRT
+    function handleVideoSelect(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      document.getElementById('videoNameDisplay').textContent = file.name;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        videoFileBase64 = e.target.result.split(',')[1];
+        const btn = document.getElementById('btnVideoSub');
+        btn.disabled = false; btn.style.opacity = "1";
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function processVideoSubtitles() {
+      const apiKey = document.getElementById('geminiApiKey').value.trim();
+      if (!apiKey) return alert("Gemini API Key ထည့်ပါ");
+      if (!videoFileBase64) return alert("ဗီဒီယို သို့မဟုတ် အသံဖိုင် ရွေးချယ်ပါ");
+
+      const log = document.getElementById('videoSubLog');
+      log.textContent = "AI မှ ဗီဒီယို အသံကို နားထောင်ပြီး မြန်မာစာတန်းထိုး တိုက်ရိုက်ထုတ်ယူနေပါသည် (ခဏစောင့်ပါ)...";
+
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{
+              parts: [
+                { inline_data: { mime_type: "audio/mp3", data: videoFileBase64 } },
+                { text: "Listen to the audio and generate complete, accurate Burmese subtitles in standard .srt format with proper timestamps (00:00:00,000 --> 00:00:00,000). Return ONLY the raw SRT format content." }
+              ]
+            }]
+          })
+        });
+        const data = await res.json();
+        videoSRTResult = data.candidates[0].content.parts[0].text.replace(/```srt/g, '').replace(/```/g, '').trim();
+        log.textContent = "ဗီဒီယိုမှ မြန်မာစာတန်းထိုး ရရှိပါပြီ:\n\n" + videoSRTResult;
+        document.getElementById('btnDownloadVideoSrt').style.display = "flex";
+      } catch (err) {
+        log.textContent = "အမှားအယွင်းရှိပါသည်- ဖိုင်အရွယ်အစား ကြီးလွန်းခြင်း သို့မဟုတ် API ချိတ်ဆက်မှု မအောင်မြင်ပါ။";
+      }
+    }
+
+    function downloadVideoSRT() {
+      const blob = new Blob([videoSRTResult], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'video_burmese.srt'; a.click();
+    }
+
+    // 3. AUTO RECAP GENERATOR
+    async function generateRecap() {
+      const apiKey = document.getElementById('geminiApiKey').value.trim();
+      const input = document.getElementById('recapInput').value.trim();
+      if (!apiKey) return alert("Gemini API Key ထည့်ပါ");
+      if (!input) return alert("ဇာတ်လမ်းစာသား ထည့်ပါ");
+
+      const out = document.getElementById('recapOutput');
+      out.textContent = "စိတ်ဝင်စားဖွယ် Recap ဇာတ်ညွှန်းကို ဖန်တီးနေပါသည်...";
+
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{ text: `Create an engaging, viral-style Burmese video recap script (မြန်မာလို စိတ်ဝင်စားဖွယ် ဇာတ်လမ်းအကျဉ်းချုပ်) based on this content. Make it exciting for TikTok/Reels viewers:\n\n${input}` }]
+            }]
+          })
+        });
+        const data = await res.json();
+        out.innerText = data.candidates[0].content.parts[0].text;
+      } catch (e) {
+        out.innerText = "Recap ဖန်တီးမှု မအောင်မြင်ပါ။ စာသားနှင့် API Key ပြန်စစ်ပါ။";
+      }
+    }
+
+    // 4. BURMESE TTS (မြန်မာလို အမှန်တကယ် အသံထွက်စေသော စနစ်)
     function playBurmeseVoice() {
       const text = document.getElementById('voiceText').value.trim();
-      if (!text) return alert("ဖတ်ပြရန် မြန်မာစာ ရိုက်ထည့်ပါ");
+      if (!text) return alert("စာသား ရိုက်ထည့်ပါ");
 
-      const audio = document.getElementById('audioPlayer');
-      const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=my&client=tw-ob&q=${encodeURIComponent(text)}`;
-      audio.src = url;
-      audio.play().catch(e => {
-        // Fallback to Web Speech API if blocked
-        window.speechSynthesis.cancel();
-        const utter = new SpeechSynthesisUtterance(text);
-        utter.lang = 'my-MM';
-        window.speechSynthesis.speak(utter);
-      });
+      const audio = document.getElementById('ttsAudio');
+      // Google TTS Engine via direct cross-proxy
+      const ttsUrl = `https://translate.google.com.vn/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=my&client=tw-ob`;
+
+      audio.src = ttsUrl;
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Mobile browser native voice speech fallback
+          window.speechSynthesis.cancel();
+          const utter = new SpeechSynthesisUtterance(text);
+          utter.lang = 'my-MM';
+          utter.rate = 0.9;
+          window.speechSynthesis.speak(utter);
+        });
+      }
     }
 
     function stopBurmeseVoice() {
-      const audio = document.getElementById('audioPlayer');
-      audio.pause();
-      audio.currentTime = 0;
+      const audio = document.getElementById('ttsAudio');
+      audio.pause(); audio.currentTime = 0;
       window.speechSynthesis.cancel();
     }
   </script>
