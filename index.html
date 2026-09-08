@@ -26,7 +26,7 @@
     .app-container {
       width: 100%;
       max-width: 420px;
-      height: 780px;
+      height: 800px;
       background: #111827;
       border: 1px solid #1f293d;
       border-radius: 28px;
@@ -96,6 +96,17 @@
       gap: 10px;
     }
 
+    .key-input {
+      background: #0b101a;
+      border: 1px solid #334155;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: #38bdf8;
+      font-size: 13px;
+      outline: none;
+      width: 100%;
+    }
+
     .input-area {
       width: 100%;
       height: 120px;
@@ -137,7 +148,7 @@
     .file-uploader {
       border: 1.5px dashed #38bdf8;
       border-radius: 14px;
-      padding: 18px;
+      padding: 16px;
       text-align: center;
       cursor: pointer;
       background: rgba(56, 189, 248, 0.03);
@@ -163,7 +174,7 @@
     .progress-fill {
       width: 0%;
       height: 100%;
-      background: #38bdf8;
+      background: #10b981;
       transition: width 0.3s;
     }
 
@@ -175,7 +186,7 @@
       font-family: monospace;
       font-size: 11.5px;
       color: #38bdf8;
-      height: 200px;
+      height: 180px;
       overflow-y: auto;
       white-space: pre-wrap;
     }
@@ -197,7 +208,7 @@
       color: #64748b;
       font-size: 11px;
       cursor: pointer;
-      padding: 6px 10px;
+      padding: 6px 12px;
       border-radius: 8px;
     }
 
@@ -215,17 +226,20 @@
         <div class="brand-badge">WY</div>
         <div class="brand-title">WY AI Studio</div>
       </div>
-      <span style="font-size: 12px; color: #10b981;"><i class="fa-solid fa-circle-check"></i> Pro Mode</span>
+      <span style="font-size: 11px; color: #10b981;"><i class="fa-solid fa-bolt"></i> Gemini Flash</span>
     </div>
 
-    <!-- TAB 1: SRT Translate Engine (စာကြောင်း ၂၀၀ Auto Translator) -->
-    <div class="tab-content active" id="tab-srt-trans">
+    <!-- TAB 1: Gemini SRT Translator (250 Lines Capacity) -->
+    <div class="tab-content active" id="tab-srt">
       <div class="card">
-        <span style="font-size: 13px; color: #94a3b8;"><i class="fa-solid fa-language"></i> SRT Auto-Translator (စာကြောင်း ၂၀၀ ထိ ဘာသာပြန်နိုင်သည်)</span>
-        
+        <span style="font-size: 12px; color: #94a3b8;"><i class="fa-solid fa-key"></i> Gemini API Key ထည့်ရန် (Auto Saved)</span>
+        <input type="password" id="geminiApiKey" class="key-input" placeholder="AI Studio Key (AIzaSy...)" onchange="saveApiKey()">
+      </div>
+
+      <div class="card">
         <label class="file-uploader" for="srtFileInput">
-          <i class="fa-solid fa-file-arrow-up" style="font-size: 26px; color: #38bdf8;"></i>
-          <span id="fileNameDisplay" style="font-size: 13px; color: #cbd5e1;">မူရင်း .srt ဖိုင် ရွေးချယ်ပါ (သို့မဟုတ် နှိပ်ပါ)</span>
+          <i class="fa-solid fa-file-arrow-up" style="font-size: 24px; color: #38bdf8;"></i>
+          <span id="fileNameDisplay" style="font-size: 13px; color: #cbd5e1;">.srt ဖိုင် ရွေးချယ်ပါ (စာကြောင်း ၂၅၀ အထိ)</span>
           <input type="file" id="srtFileInput" accept=".srt" onchange="handleFileSelect(event)">
         </label>
 
@@ -233,29 +247,29 @@
           <div class="progress-fill" id="progressFill"></div>
         </div>
 
-        <button class="btn-action" id="btnTranslate" onclick="processAndTranslateSRT()" disabled style="opacity: 0.6;">
-          <i class="fa-solid fa-wand-magic-sparkles"></i> မြန်မာစာတန်းထိုး အဖြစ် ဘာသာပြန်မည်
+        <button class="btn-action" id="btnTranslate" onclick="translateWithGemini()" disabled style="opacity: 0.6;">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> AI ဖြင့် မြန်မာစာတန်းထိုး ပြောင်းမည်
         </button>
 
-        <button class="btn-action btn-secondary" id="btnDownload" onclick="downloadTranslatedSRT()" style="display: none;">
+        <button class="btn-action btn-secondary" id="btnDownload" onclick="downloadSRT()" style="display: none;">
           <i class="fa-solid fa-download"></i> မြန်မာ .srt ဖိုင် ဒေါင်းလုဒ်ဆွဲမည်
         </button>
       </div>
 
-      <div class="srt-box" id="srtLog">ဘာသာပြန်ပြီးသား စာတန်းထိုးများကို ဤနေရာတွင် တိုက်ရိုက် ကြည့်ရှုနိုင်ပါမည်...</div>
+      <div class="srt-box" id="srtLog">API Key ထည့်သွင်းပြီး .srt ဖိုင်ထည့်ပါက သဘာဝကျကျ ဘာသာပြန်ပေးပါမည်...</div>
     </div>
 
-    <!-- TAB 2: Voice Maker -->
+    <!-- TAB 2: Burmese Text To Speech -->
     <div class="tab-content" id="tab-voice">
       <div class="card" style="flex:1;">
-        <span style="font-size: 13px; color: #94a3b8;"><i class="fa-solid fa-volume-high"></i> အသံဖန်တီးခြင်း (Text to Speech)</span>
-        <textarea class="input-area" id="voiceText" placeholder="ဖတ်ပြစေလိုသော စာသားကို ရိုက်ထည့်ပါ...">မင်္ဂလာပါ WY AI Studio မှ ကြိုဆိုပါတယ်။</textarea>
+        <span style="font-size: 13px; color: #94a3b8;"><i class="fa-solid fa-volume-high"></i> မြန်မာ အသံထွက်စနစ် (Burmese TTS)</span>
+        <textarea class="input-area" id="voiceText" placeholder="ဖတ်ပြစေလိုသော မြန်မာစာ ရိုက်ထည့်ပါ...">မင်္ဂလာပါ WY AI Studio မှ ကြိုဆိုပါတယ်။ ဗီဒီယိုစာတန်းထိုး ပြုလုပ်ခြင်း အောင်မြင်ပါသည်။</textarea>
         
         <div style="display:flex; gap: 8px;">
-          <button class="btn-action" style="flex:1;" onclick="playVoice()">
-            <i class="fa-solid fa-play"></i> အသံဖွင့်ရန်
+          <button class="btn-action" style="flex:1;" onclick="playBurmeseVoice()">
+            <i class="fa-solid fa-play"></i> မြန်မာလို ဖတ်ပြပါ
           </button>
-          <button class="btn-action btn-secondary" onclick="window.speechSynthesis.cancel()">
+          <button class="btn-action btn-secondary" onclick="stopBurmeseVoice()">
             <i class="fa-solid fa-stop"></i>
           </button>
         </div>
@@ -264,20 +278,33 @@
 
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
-      <div class="nav-item active" onclick="switchTab('tab-srt-trans', this)">
+      <div class="nav-item active" onclick="switchTab('tab-srt', this)">
         <i class="fa-solid fa-closed-captioning"></i>
         <span>SRT ဘာသာပြန်</span>
       </div>
       <div class="nav-item" onclick="switchTab('tab-voice', this)">
         <i class="fa-solid fa-volume-high"></i>
-        <span>အသံထုတ်စနစ်</span>
+        <span>မြန်မာအသံစနစ်</span>
       </div>
     </div>
   </div>
 
+  <audio id="audioPlayer" style="display: none;"></audio>
+
   <script>
-    let rawSRTText = "";
+    let rawSRT = "";
     let finalTranslatedSRT = "";
+
+    // Load saved API key on startup
+    window.onload = function() {
+      const savedKey = localStorage.getItem('wy_gemini_key');
+      if (savedKey) document.getElementById('geminiApiKey').value = savedKey;
+    };
+
+    function saveApiKey() {
+      const key = document.getElementById('geminiApiKey').value.trim();
+      localStorage.setItem('wy_gemini_key', key);
+    }
 
     function switchTab(tabId, el) {
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -286,7 +313,6 @@
       el.classList.add('active');
     }
 
-    // 1. File Upload Logic
     function handleFileSelect(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -294,18 +320,20 @@
       document.getElementById('fileNameDisplay').textContent = file.name;
       const reader = new FileReader();
       reader.onload = function(e) {
-        rawSRTText = e.target.result;
+        rawSRT = e.target.result;
         const btn = document.getElementById('btnTranslate');
         btn.disabled = false;
         btn.style.opacity = "1";
-        document.getElementById('srtLog').textContent = `ဖိုင်ဖတ်ပြီးပါပြီ။ စာကြောင်းများကို ဘာသာပြန်ရန် အသင့်ဖြစ်နေပါပြီ...\n\nမူရင်းအစအကြမ်း:\n` + rawSRTText.substring(0, 200) + "...";
+        document.getElementById('srtLog').textContent = "ဖိုင်ဖတ်ပြီးပါပြီ။ 'AI ဖြင့် မြန်မာစာတန်းထိုး ပြောင်းမည်' ကို နှိပ်ပါ...";
       };
       reader.readAsText(file);
     }
 
-    // 2. SRT Parsing & Translation Engine (Up to 200 Subtitles)
-    async function processAndTranslateSRT() {
-      if (!rawSRTText) return alert("ကျေးဇူးပြု၍ .srt ဖိုင် အရင်ထည့်သွင်းပေးပါ");
+    // AI Translation Batch Engine (Max 250 Lines)
+    async function translateWithGemini() {
+      const apiKey = document.getElementById('geminiApiKey').value.trim();
+      if (!apiKey) return alert("ကျေးဇူးပြု၍ Google AI Studio API Key အရင်ထည့်ပေးပါ!");
+      if (!rawSRT) return alert(".srt ဖိုင် အရင်ရွေးချယ်ပေးပါ!");
 
       const logBox = document.getElementById('srtLog');
       const progressBar = document.getElementById('progressBar');
@@ -315,52 +343,69 @@
 
       progressBar.style.display = "block";
       btnTranslate.disabled = true;
-      logBox.textContent = "ဘာသာပြန်ခြင်း စတင်နေပါပြီ...\n";
 
-      // Split SRT Blocks
-      const blocks = rawSRTText.trim().replace(/\r\n/g, '\n').split(/\n\n+/);
-      const totalBlocks = Math.min(blocks.length, 200); // Limit to 200 lines
-      let translatedBlocks = [];
+      const blocks = rawSRT.trim().replace(/\r\n/g, '\n').split(/\n\n+/);
+      const totalBlocks = Math.min(blocks.length, 250); // Up to 250 blocks
+      logBox.textContent = `စုစုပေါင်း စာကြောင်းရေ ${totalBlocks} ကို AI ဖြင့် စတင်ဘာသာပြန်နေပါသည်...\n`;
 
-      for (let i = 0; i < totalBlocks; i++) {
-        const lines = blocks[i].split('\n');
-        if (lines.length >= 3) {
-          const indexNum = lines[0];
-          const timeCode = lines[1];
-          const originalText = lines.slice(2).join(' ');
+      const BATCH_SIZE = 25; // 25 subtitles per API call for safety & quality
+      let finalResultBlocks = [];
 
-          // Translate Subtitle Line
-          try {
-            const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(originalText)}&langpair=autodetect|my`);
-            const data = await res.json();
-            const translatedText = (data.responseData && data.responseData.translatedText) ? data.responseData.translatedText : originalText;
-
-            translatedBlocks.push(`${indexNum}\n${timeCode}\n${translatedText}`);
-            logBox.textContent = `[${i + 1}/${totalBlocks}] ပြောင်းလဲပြီး: ${translatedText}\n` + logBox.textContent;
-          } catch (e) {
-            translatedBlocks.push(blocks[i]); // Fallback to original
+      for (let i = 0; i < totalBlocks; i += BATCH_SIZE) {
+        const batchBlocks = blocks.slice(i, Math.min(i + BATCH_SIZE, totalBlocks));
+        
+        let batchInput = [];
+        batchBlocks.forEach(b => {
+          const lines = b.split('\n');
+          if (lines.length >= 3) {
+            batchInput.push({
+              id: lines[0],
+              time: lines[1],
+              text: lines.slice(2).join(' ')
+            });
           }
-        } else {
-          translatedBlocks.push(blocks[i]);
+        });
+
+        const promptText = `You are an expert subtitle translator for video series. Translate the following Chinese/foreign subtitle dialogue texts into natural, conversational, fluent Burmese (မြန်မာစကားပြော သဘာဝကျကျ). 
+DO NOT change timecodes or IDs.
+Return ONLY valid JSON format with array of objects containing keys "id", "time", and "text":
+${JSON.stringify(batchInput)}`;
+
+        try {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: promptText }] }]
+            })
+          });
+
+          const data = await res.json();
+          let aiText = data.candidates[0].content.parts[0].text;
+          aiText = aiText.replace(/```json/g, '').replace(/```/g, '').trim();
+
+          const translatedArr = JSON.parse(aiText);
+          translatedArr.forEach(item => {
+            finalResultBlocks.push(`${item.id}\n${item.time}\n${item.text}`);
+          });
+
+          logBox.textContent = `[${finalResultBlocks.length}/${totalBlocks}] ကြောင်း ပြီးစီးပါပြီ...\n` + logBox.textContent;
+        } catch (err) {
+          // Fallback to original if parse error
+          batchBlocks.forEach(b => finalResultBlocks.push(b));
         }
 
-        // Update Progress Bar
-        const percent = Math.round(((i + 1) / totalBlocks) * 100);
-        progressFill.style.width = `${percent}%`;
-        
-        // Small delay to prevent API rate limit
-        await new Promise(resolve => setTimeout(resolve, 150));
+        const pct = Math.round((Math.min(i + BATCH_SIZE, totalBlocks) / totalBlocks) * 100);
+        progressFill.style.width = `${pct}%`;
       }
 
-      finalTranslatedSRT = translatedBlocks.join('\n\n');
-      logBox.textContent = "အကုန်လုံး မြန်မာဘာသာသို့ အောင်မြင်စွာ ပြောင်းလဲပြီးပါပြီ!\n\n" + finalTranslatedSRT;
+      finalTranslatedSRT = finalResultBlocks.join('\n\n');
+      logBox.textContent = "ဘာသာပြန်ခြင်း ပြီးမြောက်ပါပြီ! CapCut အတွက် ဒေါင်းလုဒ် ဆွဲယူနိုင်ပါပြီ။\n\n" + finalTranslatedSRT;
       btnDownload.style.display = "flex";
       btnTranslate.disabled = false;
     }
 
-    // 3. Download Translated SRT
-    function downloadTranslatedSRT() {
-      if (!finalTranslatedSRT) return alert("ဒေါင်းလုဒ်ဆွဲရန် စာတန်းထိုး မရှိသေးပါ");
+    function downloadSRT() {
       const blob = new Blob([finalTranslatedSRT], { type: 'text/plain;charset=utf-8' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
@@ -368,14 +413,28 @@
       link.click();
     }
 
-    // 4. Voice TTS Engine
-    function playVoice() {
-      const text = document.getElementById('voiceText').value;
-      if (!text.trim()) return;
+    // 3. Burmese Text to Speech Engine (Google Translate TTS Direct Stream)
+    function playBurmeseVoice() {
+      const text = document.getElementById('voiceText').value.trim();
+      if (!text) return alert("ဖတ်ပြရန် မြန်မာစာ ရိုက်ထည့်ပါ");
+
+      const audio = document.getElementById('audioPlayer');
+      const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=my&client=tw-ob&q=${encodeURIComponent(text)}`;
+      audio.src = url;
+      audio.play().catch(e => {
+        // Fallback to Web Speech API if blocked
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'my-MM';
+        window.speechSynthesis.speak(utter);
+      });
+    }
+
+    function stopBurmeseVoice() {
+      const audio = document.getElementById('audioPlayer');
+      audio.pause();
+      audio.currentTime = 0;
       window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = 0.9;
-      window.speechSynthesis.speak(utterance);
     }
   </script>
 </body>
